@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+<head>
+	<meta charset="utf-8">
+	<title>chen面试题9-18</title>
+</head>
+<body>
+<p>
+原题
+删除字符串中的“b”和“ac”，需要满足如下的条件：
+字符串只能遍历一次
+不能够使用额外的空间
+例如：
+acbac   ==>  ""
+aaac    ==>  aa
+ababac  ==>  aa
+bbbbd   ==>  d
+进一步思考：如何处理aaccac呢，需要做哪些改变呢？
+</p>
+
+<p>体验：小菜感觉js处理字符串还是转成数组舒服</p>
+</body>
+<script type="text/javascript">
+	 var arr = ['acbac','aaac','ababac','bbbbd','aaccac'];
+	for(var i=0;i<arr.length;i++){
+		console.log(stringFilter(arr[i].split('')));
+	}
+
+ 	//标准解法
+ 	function stringFilter(str){
+ 		//console.log(str);
+		var state = 'one';
+		var j=0;
+		for(var i=0;i<str.length;i++){			
+			if(state=='one' && str[i]!='b' && str[i]!='a'){
+			//	console.log(j+' '+str[j]+' '+i+' '+str[i]);
+			//	console.log(str);
+				str[j]=str[i];
+				j++;
+			//	console.log(str);
+			}
+			if(state=='two' && str[i]!='c'){
+				str[j]='a';
+				j++;
+				if(str[i]!='a' && str[i]!='b'){
+					str[j]=str[i];
+					j++;
+				}
+			}
+			state=str[i]=='a'?'two':'one';
+		//	console.log(state);
+		//	console.log(j);
+			if(j>1 && str[j-1]=='c' && str[j-2]=='a'){
+				j=j-2;
+			}
+		}
+		if(state=='two'){
+			str[j]='a';
+			j++;
+		}		
+		str = str.join("").substring(0,j);
+ 		return str;
+ 	}
+</script>
+</html>
