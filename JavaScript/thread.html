@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+<head>
+	<meta charset="utf-8">
+	<title>伪多线程模型</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	var startTime = new Date();
+	var recursive = function() {
+		var now = new Date();
+		var timespan = now.getTime() - startTime.getTime();
+		console.log('now '+ now.getTime() + ' start ' + startTime.getTime() +' span ' + timespan);
+		if(timespan>60000){
+			startTime = now;
+			console.log('lxctt refresh');
+		}
+		setTimeout(recursive,1000);
+	}
+	recursive();
+	var i=0;
+	while(i<100000){
+		console.log('阻塞settimeout');
+		i++;
+	}
+</script>
+</html>
