@@ -19,14 +19,19 @@ bbbbd   ==>  d
 </p>
 
 <p>体验：小菜感觉js处理字符串还是转成数组舒服</p>
+<p>我的解法没满足题目的要求，太菜了</p>
 </body>
 <script type="text/javascript">
 	 var arr = ['acbac','aaac','ababac','bbbbd','aaccac'];
 	for(var i=0;i<arr.length;i++){
 		console.log(stringFilter(arr[i].split('')));
 	}
+	console.log('我的解法：');
+	for(var i=0;i<arr.length;i++){
+		console.log(lxcDeal(arr[i].split('')));
+	}
 
- 	//标准解法
+ 	//标准解法,状态机
  	function stringFilter(str){
  		//console.log(str);
 		var state = 'one';
@@ -60,6 +65,24 @@ bbbbd   ==>  d
 		}		
 		str = str.join("").substring(0,j);
  		return str;
+ 	}
+
+ 	//lxc解法
+ 	function lxcDeal(str){
+ 		var stack = [];
+ 		for(var i=0;i<str.length;i++){
+ 			if(str[i]=='b'){
+ 				continue;
+ 			}
+ 			if(str[i]!='c'){
+ 				stack.push(str[i]);
+ 			}
+ 			if(stack[stack.length-1]=='a' && str[i]=='c'){
+ 				stack.pop();
+ 			}
+ 		}
+ 		statck = stack.join('');
+ 		return statck;
  	}
 </script>
 </html>
