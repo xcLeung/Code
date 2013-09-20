@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang='utf-8'>
+<head>
+	<meta charset='utf-8'>
+	<title>高精度乘法</title>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	var a=reverse([1,0,0]);
+	var b=reverse([2,4]);
+	var res = multiple(a,b);		
+	console.log(res);
+
+
+	function multiple(firstArr,secondArr){
+		var res = [];
+		for(var i=0;i<firstArr.length+secondArr.length;i++){
+			res.push(0);
+		}
+		for(var i=0;i<firstArr.length;i++){
+			for(var j=0;j<secondArr.length;j++){
+				res[i+j]+=firstArr[i]*secondArr[j];
+				console.log(i+' '+j+' '+res[i+j]);
+			}
+		}
+		for(var i=0;i<firstArr.length+secondArr.length;i++){
+			console.log(res[i]);
+			res[i+1]+=parseInt(res[i]/10);
+			res[i]%=res[i]%10;
+		}
+		console.log(res);
+		return res;
+	}
+
+	function reverse(arr){
+		var temp;
+		for(var i=0;i*2<arr.length;i++){
+			temp=arr[i];
+			arr[i]=arr[arr.length-i-1];
+			arr[arr.length-i-1]=temp;
+		}
+		return arr;
+	}
+</script>
+</html>
