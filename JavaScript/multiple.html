@@ -8,30 +8,32 @@
 
 </body>
 <script type="text/javascript">
-	var a=reverse([1,0,0]);
-	var b=reverse([2,4]);
+	var a=reverse([3,4,5]);
+	var b=reverse([2,3]);
 	var res = multiple(a,b);		
 	console.log(res);
 
 
 	function multiple(firstArr,secondArr){
 		var res = [];
-		for(var i=0;i<firstArr.length+secondArr.length;i++){
+		console.log(firstArr);
+		console.log(secondArr);
+		for(var i=0;i<firstArr.length+secondArr.length-1;i++){
 			res.push(0);
 		}
+		console.log(res);
 		for(var i=0;i<firstArr.length;i++){
 			for(var j=0;j<secondArr.length;j++){
 				res[i+j]+=firstArr[i]*secondArr[j];
-				console.log(i+' '+j+' '+res[i+j]);
 			}
 		}
-		for(var i=0;i<firstArr.length+secondArr.length;i++){
-			console.log(res[i]);
+		for(var i=0;i<firstArr.length+secondArr.length-2;i++){
 			res[i+1]+=parseInt(res[i]/10);
-			res[i]%=res[i]%10;
+			res[i]=res[i]%10;
+			console.log(res[i]);
 		}
-		console.log(res);
-		return res;
+		// console.log(res);
+		return reverse(res);
 	}
 
 	function reverse(arr){
