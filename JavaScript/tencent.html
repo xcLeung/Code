@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="utf-8">
+<head>
+	<meta charset="utf-8">
+	<style type="text/css">
+		html,body {
+			margin: 0; padding: 0; height: 100%;
+		}
+
+		#center { width: 400px; 
+			      height: 50px; 
+			      position: absolute; 
+			      top:50%; 
+			      left: 50%;
+			      margin-left: -200px;
+			      margin-top: -25px;
+			      border: 1px solid #ccc;
+			  }
+
+		#content {
+			      line-height: 50px;
+			      width: 385px;
+			      margin:0 auto;		
+		}
+
+		#txtNum {
+			margin:24px;
+		}
+	</style>
+	<title>腾讯9-22web前台</title>
+</head>
+<body>
+	<input type="text" id="txtNum" name="txtNum" onchange="checkInput()" />
+	<div id="center">
+	</div>
+</body>
+<script type="text/javascript" src="jquery.1.9.0.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#center').append('<div id="content"></div>');
+		setDate();
+		setInterval(setDate,1000);
+	});
+
+	function setDate(){
+		var now = Date();
+		// console.log(now);
+		$('#content').text(now);
+	}
+
+	function checkInput(){
+		var text = $('#txtNum').val();
+		if(!Number(text)){
+			$('#txtNum').css({
+				'border-color': '#f00'
+			});
+		}else{
+			$('#txtNum').css({
+				'border-color': ''
+			});
+		}
+	}
+</script>
+</html>
