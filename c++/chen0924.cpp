@@ -5,6 +5,12 @@
 	> Created Time: Sun 29 Sep 2013 10:24:14 AM CST
  ************************************************************************/
 
+ /*
+ 给定字符串，找到它的最长回文子串，都有哪些思路呢？例
+ 如"adaiziguizhongrenenrgnohziugiziadb",回文字串很多了，但最长的
+ 是"daiziguizhongrenenrgnohziugiziad"
+ */
+ 
 #include<iostream>
 #include<string.h>
 using namespace std;
