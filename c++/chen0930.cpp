@@ -38,7 +38,7 @@ void init(){
 
 void deal(char *strA,char *strB){
     int lenA,lenB;
-    int i,j,n,count,start;
+    int i,j,n,count,start=0;
     lenA=strlen(strA);
     lenB=strlen(strB);
     if(lenB>lenA){
