@@ -4,7 +4,7 @@
 	> Mail: ma6174@163.com 
 	> Created Time: Fri 04 Oct 2013 02:11:04 PM CST
  ************************************************************************/
-/*未验证，等结果
+/*
 N个孩子站成一排，每个人分给一个权重。按照如下的规则分配糖果： 
 每个孩子至少有一个糖果；所分配权重较高的孩子，会比他的邻居获得更多的糖
 果。 问题是，最少需要多少个糖果？
@@ -33,13 +33,11 @@ int deal(vector<int> w){
         }else if(w[i]<=w[i-1]){
             ivec[i]=1;
         }
-        for(j=i;j>0;j--){
-            if(w[j]<w[j-1] && ivec[j]>=ivec[j-1]){
-                ivec[j-1]=ivec[j]+1;
-            }
-        //    cout<<ivec[j]<<" ";
+    }
+	for(i=w.size()-1;i>0;i--){
+        if(w[i]<w[i-1] && ivec[i]>=ivec[i-1]){
+            ivec[i-1]=ivec[i]+1;
         }
-        //cout<<endl;
     }
     for(vector<int>::iterator iter=ivec.begin();iter<ivec.end();iter++){
         cout<<*iter<<" ";
