@@ -42,7 +42,7 @@ char *get_circle_digits(unsigned k,unsigned j){
         return 0;
 }
 
-//计算两个绝对路径的共同深度 eg. ~a/b/c ~a/d
+//计算两个绝对路径的共同深度 eg. ~/a/b/c ~/a/d
 unsigned get_common_depth(const char *path1,const char *path2){
     size_t len = strlen(path1)<strlen(path2)?strlen(path1):strlen(path2);
     size_t i,count=0;
