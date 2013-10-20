@@ -42,10 +42,28 @@ int check(int array[][3],int m,int n,int key){
     return 0;
 }
 
+int deal(int array[][3],int m,int n,int key){
+    int i,j;
+    if(array && m>=0 && n>=0){
+        i=0,j=n-1;
+        while(i<m && j>=0){
+            if(array[i][j]==key){
+                return 1;
+            }else if(array[i][j]<key){
+                i++;
+            }else if(array[i][j]>key){
+                j--;
+            }
+        }
+    }
+    return 0;
+}
+
 int main(){
     int num=0;
     cout<<"请输入要查找的数字：";
     cin>>num;
     cout<<check(arr,3,3,num)<<endl;
+    cout<<deal(arr,3,3,num)<<endl;
     return 0;
 }
