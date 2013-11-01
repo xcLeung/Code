@@ -22,7 +22,9 @@ void addToHead(LNode **head,int value);
 void addToIndex(LNode **head,int value,int index);
 void deleteNode(LNode **head,int value);
 LNode *reverseListDG(LNode **head,LNode *p);
-LNode *reverseListDD(LNode *head);
+LNode *reverseListDD(LNode **head);
+void mergeList(LNode **lc,LNode *la,LNode *lb);
+
 
 int main(){
     int n,val;
@@ -33,8 +35,8 @@ int main(){
         cin>>val;
         addToTail(&head,val);
     }
-    addToHead(&head,16);
-    addToIndex(&head,24,3);
+    //addToHead(&head,16);
+    //addToIndex(&head,24,3);
     //deleteNode(&head,4);
     cout<<"原来的序列：";
     print(head);
@@ -44,6 +46,24 @@ int main(){
     reverseListDG(&rhead,head);
     cout<<"链表逆序后的输出：";
     print(rhead);
+    cout<<"链表再逆序后的输出：";
+    head=reverseListDD(&rhead);
+    print(head);
+
+    cout<<"------------------------------"<<endl;
+    LNode *la=NULL;
+    LNode *lb=NULL;
+    LNode *lc=NULL;
+    for(int i=0;i<10;i++){
+        if(i%2){
+            addToTail(&la,i);
+        }else{
+            addToTail(&lb,i);
+        }
+    }
+    mergeList(&lc,la,lb);
+    cout<<"合并两个有序链表："<<endl;
+    print(lc);
     return 0;
 }
 
@@ -142,14 +162,60 @@ void deleteNode(LNode **head,int value){
 
 LNode *reverseListDG(LNode **head,LNode *p){
     //cout<<p->data<<endl;
+    if(p==NULL){
+        cout<<"头指针为空"<<endl;
+        return NULL;
+    }
     if(p->next==NULL){
         *head=p;
         return p;
     }
-        reverseListDG(head,p->next)->next=p;
-        p->next=NULL;
-        return p;
-    
+    reverseListDG(head,p->next)->next=p;
+    p->next=NULL;
+    return p;
+}
 
+LNode *reverseListDD(LNode **head){
+    if(*head==NULL){
+        cout<<"头指针为空"<<endl;
+        return NULL;
+    }else{
+        LNode *p=*head;
+        LNode *pre=NULL;
+        LNode *next=(*head)->next;
+        while(next!=NULL){
+            p->next=pre;
+            pre=p;
+            p=next;
+            next=next->next;
+        }
+        p->next=pre;
+        return p;
+    }
+}
+
+void mergeList(LNode **lc,LNode *la,LNode *lb){
+    LNode *p=la;
+    LNode *q=lb;
+    LNode *res;
+    if(p->data>=q->data){
+        *lc=res=lb;
+        q=q->next;
+    }else{
+        *lc=res=la;
+        p=p->next;
+    }
+    while(p && q){
+        if(p->data<=q->data){
+            res->next=p;
+            res=p;
+            p=p->next;
+        }else{
+            res->next=q;
+            res=q;
+            q=q->next;
+        }
+    }
+    res->next=p?p:q;
 }
 
