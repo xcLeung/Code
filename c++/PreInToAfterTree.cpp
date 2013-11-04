@@ -10,6 +10,7 @@
 #include<cstring>
 #include<stack>
 #include<map>
+#include<queue>
 using namespace std;
 
 struct BTNode{
@@ -28,6 +29,9 @@ void printAfterDG(BTNode *root);
 void printPreDD(BTNode *root);
 void printInDD(BTNode *root);
 void printAfterDD(BTNode *root);
+void printBFS(BTNode *root);
+int countTree(BTNode *root);
+int highTree(BTNode *root);
 
 int main(){
     int n;
@@ -57,10 +61,15 @@ int main(){
     cout<<"-----------------------"<<endl;
     cout<<"前序遍历（迭代）:";
     printPreDD(root);
-    cout<<"后序遍历（迭代）:";
+    cout<<"中序遍历（迭代）:";
     printInDD(root);
     cout<<"后序遍历（迭代）:";
     printAfterDD(root);
+    cout<<"层次遍历:";
+    printBFS(root);
+    cout<<"-----------------------"<<endl;
+    cout<<"节点总数:"<<countTree(root)<<endl;
+    cout<<"树的高度:"<<highTree(root)<<endl;
 
     free(preArray);
     delete InArray;
@@ -113,6 +122,48 @@ BTNode *constructCore(int *startPre,int *endPre,int *startIn,int *endIn){
     return newNode;
 }
 
+int highTree(BTNode *root){
+    if(root==NULL){
+        return 0;
+    }else{
+        int res,left,right;
+        left=highTree(root->lchild);
+        right=highTree(root->rchild);
+        res=(left>right?left:right)+1;
+        return res;
+    }
+}
+
+int countTree(BTNode *root){
+    if(root!=NULL){
+        return countTree(root->lchild)+countTree(root->rchild)+1;
+    }
+    return 0;
+}
+
+void printBFS(BTNode *root){
+    queue<BTNode*> bnqueue;
+    if(root==NULL){
+        cout<<"树为空"<<endl;
+        return ;
+    }else{
+        BTNode *p=root;
+        bnqueue.push(p);
+        while(bnqueue.size()>0){
+            p=bnqueue.front();
+            cout<<p->data<<" ";
+            bnqueue.pop();
+            if(p->lchild!=NULL){
+                bnqueue.push(p->lchild);
+            }
+            if(p->rchild!=NULL){
+                bnqueue.push(p->rchild);
+            }
+        }
+        cout<<endl;
+    }
+}
+
 void printPreDD(BTNode *root){
     stack<BTNode*> bnstack;
     if(root==NULL){
@@ -130,8 +181,8 @@ void printPreDD(BTNode *root){
             bnstack.pop();
             p=p->rchild;
         }
+        cout<<endl;
     }
-    cout<<endl;
 }
 
 void printInDD(BTNode *root){
@@ -151,8 +202,8 @@ void printInDD(BTNode *root){
             bnstack.pop();
             p=p->rchild;
         }
+        cout<<endl;
     }
-    cout<<endl;
 }
 
 void printAfterDD(BTNode *root){
@@ -179,9 +230,9 @@ void printAfterDD(BTNode *root){
                 cout<<p->data<<" ";
                 p=NULL;
             }
-        } 
+        }
+        cout<<endl;
     }
-    cout<<endl;
 }
 
 void printPreDG(BTNode *root){
