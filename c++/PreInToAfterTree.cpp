@@ -8,8 +8,8 @@
 #include<iostream>
 #include<cstdlib>
 #include<cstring>
-#include<csetjmp>
-#include<exception>
+#include<stack>
+#include<map>
 using namespace std;
 
 struct BTNode{
@@ -25,7 +25,9 @@ BTNode *constructCore(int *startPre,int *endPre,int *startIn,int *endIn);
 void printPreDG(BTNode *root);
 void printInDG(BTNode *root);
 void printAfterDG(BTNode *root);
-
+void printPreDD(BTNode *root);
+void printInDD(BTNode *root);
+void printAfterDD(BTNode *root);
 
 int main(){
     int n;
@@ -52,12 +54,22 @@ int main(){
     cout<<"后序遍历（递归）:";
     printAfterDG(root);
     cout<<endl;
+    cout<<"-----------------------"<<endl;
+    cout<<"前序遍历（迭代）:";
+    printPreDD(root);
+    cout<<"后序遍历（迭代）:";
+    printInDD(root);
+    cout<<"后序遍历（迭代）:";
+    printAfterDD(root);
+
+    free(preArray);
+    delete InArray;
     return 0;
 }
 
 BTNode *constructAfter(int *preArray,int *InArray,int length){
     if(preArray==NULL || InArray==NULL || length==0){
-        cout<<"序列为空,无法构建";
+        cout<<"序列为空,无法构建"<<endl;
         return NULL;
     }
     return constructCore(preArray,preArray+length-1,InArray,InArray+length-1);
@@ -76,7 +88,7 @@ BTNode *constructCore(int *startPre,int *endPre,int *startIn,int *endIn){
             return newNode;
         }
         else{
-            cout<<"错误输入"<<endl;
+            throw std::exception();
         }
     }
 
@@ -87,7 +99,7 @@ BTNode *constructCore(int *startPre,int *endPre,int *startIn,int *endIn){
         }
     }
     if(rootIn>endIn){
-        cout<<"序列非法输入";
+        throw std::exception();
     }
 
     int leftlength=rootIn-startIn;
@@ -99,6 +111,77 @@ BTNode *constructCore(int *startPre,int *endPre,int *startIn,int *endIn){
         newNode->rchild=constructCore(startPre+leftlength+1,endPre,rootIn+1,endIn);
     }
     return newNode;
+}
+
+void printPreDD(BTNode *root){
+    stack<BTNode*> bnstack;
+    if(root==NULL){
+        cout<<"树为空"<<endl;
+        return ;
+    }else{
+        BTNode *p=root;
+        while(p!=NULL || bnstack.size()>0){
+            while(p!=NULL){
+                cout<<p->data<<" ";
+                bnstack.push(p);
+                p=p->lchild;
+            }
+            p=bnstack.top();
+            bnstack.pop();
+            p=p->rchild;
+        }
+    }
+    cout<<endl;
+}
+
+void printInDD(BTNode *root){
+    stack<BTNode*> bnstack;
+    if(root==NULL){
+        cout<<"树为空"<<endl;
+        return ;
+    }else{
+        BTNode *p=root;
+        while(p!=NULL || bnstack.size()>0){
+            while(p!=NULL){
+                bnstack.push(p);
+                p=p->lchild;
+            }
+            p=bnstack.top();
+            cout<<p->data<<" ";
+            bnstack.pop();
+            p=p->rchild;
+        }
+    }
+    cout<<endl;
+}
+
+void printAfterDD(BTNode *root){
+    stack<BTNode*> bnstack;
+    map<BTNode*,int> bnmap;
+    if(root==NULL){
+        cout<<"树为空"<<endl;
+        return ;
+    }else{
+        BTNode *p=root;
+        while(p!=NULL || bnstack.size()>0){
+            while(p!=NULL){
+                bnstack.push(p);
+                bnmap[p]=0;
+                p=p->lchild;
+            }
+            if(bnmap[bnstack.top()]==0){
+                p=bnstack.top();
+                bnmap[bnstack.top()]=1;
+                p=p->rchild;
+            }else{
+                p=bnstack.top();
+                bnstack.pop();
+                cout<<p->data<<" ";
+                p=NULL;
+            }
+        } 
+    }
+    cout<<endl;
 }
 
 void printPreDG(BTNode *root){
