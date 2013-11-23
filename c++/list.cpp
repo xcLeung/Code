@@ -24,6 +24,7 @@ void deleteNode(LNode **head,int value);
 LNode *reverseListDG(LNode **head,LNode *p);
 LNode *reverseListDD(LNode **head);
 void mergeList(LNode **lc,LNode *la,LNode *lb);
+LNode* interset(LNode *firstLinkt,LNode *secondLink);
 
 
 int main(){
@@ -63,6 +64,23 @@ int main(){
     }
     mergeList(&lc,la,lb);
     cout<<"合并两个有序链表："<<endl;
+    print(lc);
+
+    cout<<"------------------------------"<<endl;
+    la=lb=lc=NULL;
+    cout<<"链表交集："<<endl;
+    addToTail(&la,1);
+    addToTail(&la,5);
+    addToTail(&la,7);
+    addToTail(&la,8);
+    print(la);
+    addToTail(&lb,2);
+    addToTail(&lb,4);
+    addToTail(&lb,5);
+    addToTail(&lb,8);
+    addToTail(&lb,9);
+    print(lb);
+    lc=interset(la,lb);
     print(lc);
     return 0;
 }
@@ -219,3 +237,30 @@ void mergeList(LNode **lc,LNode *la,LNode *lb){
     res->next=p?p:q;
 }
 
+LNode* interset(LNode *firstLink,LNode *secondLink){
+    LNode *p=firstLink;
+    LNode *q=secondLink;
+    LNode *resHead=NULL;
+    LNode *res=NULL;
+    while(p && q){
+        if(p->data<q->data){
+            p=p->next;
+        }else if(p->data>q->data){
+            q=q->next;
+        }else{
+            LNode *newNode=new LNode();
+            newNode->data=p->data;
+            newNode->next=NULL;
+            if(resHead==NULL){
+                res=newNode;
+                resHead=res;
+            }else{
+                res->next=newNode;
+                res=res->next;
+            }
+            p=p->next;
+            q=q->next;
+        }
+    }
+    return resHead;
+}
